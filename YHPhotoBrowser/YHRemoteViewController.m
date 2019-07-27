@@ -64,6 +64,7 @@
         forPageAtIndex:(NSInteger)index
        progressHandler:(void (^)(NSInteger, NSInteger))progressHandler {
     
+    NSString *remoteUrl = [NSString stringWithFormat: @"https://raw.githubusercontent.com/yuhechuan/YHPhotoBrowser/master/images/Image-%ld.jpg",(long)index];
     NSString *url = self.imageURLs[index];
     UIImage *placeholder = [UIImage imageNamed:url];
     imageView.image = placeholder;
