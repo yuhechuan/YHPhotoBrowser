@@ -363,8 +363,7 @@ static const NSUInteger reusable_page_count = 3;
         imageScrollView.imageView.image = newImage;
     }
     
-    // 点击推出，需要先回到顶部
-    if (self.dismissByClick) {
+    if (imageScrollView.contentSize.height > imageScrollView.frame.size.height && imageScrollView.contentOffset.y > 0) {
         [imageScrollView _scrollToTopAnimated:NO];
     }
 }
