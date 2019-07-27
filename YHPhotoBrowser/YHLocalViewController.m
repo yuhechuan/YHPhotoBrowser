@@ -51,6 +51,7 @@
     pbViewController.yh_dataSource = self;
     pbViewController.yh_delegate = self;
     pbViewController.yh_startPage = index;
+    pbViewController.blurBackground = YES;
     [self presentViewController:pbViewController animated:YES completion:nil];
 }
 

@@ -86,7 +86,7 @@ static const NSUInteger reusable_page_count = 3;
     self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     self.transitioningDelegate = self;
     _contentsRect = CGRectMake(0, 0, 1, 1);
-    _blurBackground = YES;
+    _blurBackground = NO;
     _hideThumb = YES;
     return self;
 }
@@ -466,7 +466,8 @@ static const NSUInteger reusable_page_count = 3;
        
         // 同步裁剪图片位置
         imageView.layer.contentsRect = self.contentsRect;
-        
+        imageView.frame = destFrame;
+        /*
         // 裁剪过图片的长微博
         if (self.thumbClippedToTop && imageScrollView.contentSize.height > CGRectGetHeight(imageScrollView.bounds)) {
             CGFloat height = CGRectGetHeight(thumbView.bounds) / CGRectGetWidth(thumbView.bounds) * CGRectGetWidth(imageView.bounds);
@@ -482,8 +483,8 @@ static const NSUInteger reusable_page_count = 3;
             CGFloat scale = CGRectGetWidth(thumbView.bounds) / CGRectGetWidth(imageView.bounds) * imageScrollView.zoomScale;
             [imageView.layer setValue:@(scale) forKeyPath:@"transform.scale"];
         } else {
-            imageView.frame = destFrame;
         }
+         */
     } else {
         // 移动到屏幕外然后 dismiss.
         imageScrollView.alpha = 0;
@@ -613,8 +614,9 @@ static const NSUInteger reusable_page_count = 3;
              @yh_weakify(self)
             imageScrollerViewController.imageScrollView.contentOffSetVerticalPercentHandler = ^(CGFloat percent) {
                 @yh_strongify(self)
-                if (percent < 0) {
-                    percent = 0;
+                
+                if (self.blurBackground && percent < 0.5) {
+                    percent = 0.5;
                 }
                 NSLog(@"blurBackgroundView == %f",percent);
                 self.blurBackgroundView.alpha = percent;

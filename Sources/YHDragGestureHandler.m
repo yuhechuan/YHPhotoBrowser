@@ -99,7 +99,7 @@
         self.gestureView.transform = transform;
         [gesture setTranslation:CGPointZero inView:self.gestureView];
         
-        float alphaValue = (halfHeight - fabs(offsety)) / halfHeight *1.0;
+        float alphaValue = (_referenceHeight - fabs(offsety)) / _referenceHeight *1.0;
         if (self.blurView) {
             self.blurView.alpha = alphaValue;
         }
