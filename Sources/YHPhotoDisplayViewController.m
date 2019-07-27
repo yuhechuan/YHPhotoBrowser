@@ -1,5 +1,5 @@
 //
-//  PBImageScrollerViewController.m
+//  YHPhotoDisplayViewController.m
 //  PhotoBrowser
 //
 //  Created by Roy Shaw on 8/24/15.

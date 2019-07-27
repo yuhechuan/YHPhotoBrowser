@@ -222,12 +222,11 @@ static const NSUInteger reusable_page_count = 3;
         return nil;
     }
     
-    // Get the reusable `PBImageScrollerViewController`
     YHPhotoDisplayViewController *imageScrollerViewController = self.reusableImageScrollerViewControllers[page % reusable_page_count];
     
     // Set new data
     if (!self.yh_dataSource) {
-        [NSException raise:@"Must implement `PBViewControllerDataSource` protocol." format:@""];
+        [NSException raise:@"Must implement `YHPhotoBrowserControllerDataSource` protocol." format:@""];
     }
     
     @yh_weakify(self)

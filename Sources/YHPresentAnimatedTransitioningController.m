@@ -1,5 +1,5 @@
 //
-//  PBPresentAnimatedTransitioningController.m
+//  YHPresentAnimatedTransitioningController.m
 //  PhotoBrowser
 //
 //  Created by Roy Shaw on 5/17/16.

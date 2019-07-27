@@ -36,7 +36,7 @@
     NSString *preTitle = @"plbdx_";
 }
 
-#pragma mark - PBViewControllerDataSource
+#pragma mark - YHPhotoBrowserControllerDataSource
 
 - (NSInteger)numberOfPagesInViewController:(YHPhotoBrowserController *)viewController {
     return self.imageURLs.count;
@@ -52,7 +52,7 @@
     imageView.image = placeholder;
 }
 
-#pragma mark - PBViewControllerDelegate
+#pragma mark - YHPhotoBrowserControllerDelegate
 
 - (void)viewController:(YHPhotoBrowserController *)viewController didSingleTapedPageAtIndex:(NSInteger)index presentedImage:(UIImage *)presentedImage {
     [self dismissViewControllerAnimated:YES completion:nil];

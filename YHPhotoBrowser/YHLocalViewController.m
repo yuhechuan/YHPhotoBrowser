@@ -54,7 +54,7 @@
     [self presentViewController:pbViewController animated:YES completion:nil];
 }
 
-#pragma mark - PBViewControllerDataSource
+#pragma mark - YHPhotoBrowserControllerDataSource
 
 - (NSInteger)numberOfPagesInViewController:(YHPhotoBrowserController *)viewController {
     return self.imageURLs.count;
@@ -67,7 +67,7 @@
     imageView.image = [UIImage imageNamed:self.imageURLs[index]];
 }
 
-#pragma mark - PBViewControllerDelegate
+#pragma mark - YHPhotoBrowserControllerDelegate
 
 - (void)viewController:(YHPhotoBrowserController *)viewController didSingleTapedPageAtIndex:(NSInteger)index presentedImage:(UIImage *)presentedImage {
     [self dismissViewControllerAnimated:YES completion:nil];
