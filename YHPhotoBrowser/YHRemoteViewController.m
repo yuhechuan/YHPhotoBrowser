@@ -8,11 +8,13 @@
 
 #import "YHRemoteViewController.h"
 #import "YHPhotoBrowserController.h"
+#import "YHSquareView.h"
 
 @interface YHRemoteViewController ()<YHPhotoBrowserControllerDelegate, YHPhotoBrowserControllerDataSource>
 
 @property (nonatomic, strong) NSMutableArray *imageURLs;
-@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIImageView    *imageView;
+@property (nonatomic, strong) YHSquareView   *squareView;
 
 @end
 
@@ -20,12 +22,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view
-//    YHPhotoBrowserController *pbViewController = [YHPhotoBrowserController new];
-//    pbViewController.yh_dataSource = self;
-//    pbViewController.yh_delegate = self;
-//    pbViewController.yh_startPage = 0;
-//    [self presentViewController:pbViewController animated:YES completion:nil];
     [self setUp];
 }
 
@@ -33,7 +29,28 @@
     self.title = @"远端图片展示";
     self.view.backgroundColor = [UIColor colorWithRed:230 / 225.0 green:103 / 255.0 blue:103 / 255.0 alpha:1];
     self.tableView.tableFooterView = [UIView new];
-    NSString *preTitle = @"plbdx_";
+    
+    NSString *preTitle = @"Image-";
+    for (int i = 0;i < 8 ; i ++) {
+        [self.imageURLs addObject:[NSString stringWithFormat:@"%@%d",preTitle,i]];
+    }
+    _squareView= [[YHSquareView alloc]initWithItems:[self.imageURLs copy]];
+    _squareView.frame = CGRectMake(0, 150, self.view.bounds.size.width, self.view.bounds.size.height);
+    
+    __weak typeof(self) ws = self;
+    _squareView.callBack = ^(NSInteger index) {
+        [ws show:index];
+    };
+    [self.view addSubview:_squareView];
+}
+
+- (void)show:(NSInteger)index {
+    YHPhotoBrowserController *pbViewController = [YHPhotoBrowserController new];
+    pbViewController.yh_dataSource = self;
+    pbViewController.yh_delegate = self;
+    pbViewController.yh_startPage = index;
+    pbViewController.blurBackground = YES;
+    [self presentViewController:pbViewController animated:YES completion:nil];
 }
 
 #pragma mark - YHPhotoBrowserControllerDataSource
