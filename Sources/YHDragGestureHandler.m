@@ -113,8 +113,9 @@
     } else if (gesture.state == UIGestureRecognizerStateEnded) {
      
         float offsety = fabs(self.gestureView.frame.origin.y - self.gestureViewOriginFrame.origin.y);
+        float longoffsety = self.gestureView.frame.origin.y;
         //如果放手的瞬时速度大于100或者偏移距离大于100，则走回调
-        if (fabs(pointVelocity.y) > 100 || offsety > 80) {
+        if (fabs(pointVelocity.y) > 100 || offsety > 100 || longoffsety < -10) {
             if (self.completeBlock != nil) {
                 self.completeBlock(true, pointVelocity.y);
             }
