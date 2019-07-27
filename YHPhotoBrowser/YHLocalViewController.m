@@ -36,7 +36,7 @@
         [self.imageURLs addObject:[NSString stringWithFormat:@"%@%d",preTitle,i]];
     }
     _squareView= [[YHSquareView alloc]initWithItems:[self.imageURLs copy]];
-    _squareView.frame = CGRectMake(0, 150, self.view.bounds.size.width, self.view.bounds.size.height);
+    _squareView.frame = CGRectMake(0, 100, self.view.bounds.size.width, self.view.bounds.size.height);
     
     __weak typeof(self) ws = self;
     _squareView.callBack = ^(NSInteger index) {
@@ -61,10 +61,7 @@
     return self.imageURLs.count;
 }
 
-- (void)viewController:(YHPhotoBrowserController *)viewController
-      presentImageView:(UIImageView *)imageView
-        forPageAtIndex:(NSInteger)index
-       progressHandler:(void (^)(NSInteger, NSInteger))progressHandler {
+- (void)viewController:(YHPhotoBrowserController *)viewController presentImageView:(UIImageView *)imageView forPageAtIndex:(NSInteger)index progressHandler:(void (^)(NSInteger, NSInteger, NSURL * _Nullable))progressHandler {
     imageView.image = [UIImage imageNamed:self.imageURLs[index]];
 }
 

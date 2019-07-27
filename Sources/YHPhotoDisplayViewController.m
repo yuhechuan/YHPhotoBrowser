@@ -85,7 +85,7 @@
         self.imageView.image = self.fetchImageHandler();
     } else if (self.configureImageViewWithDownloadProgressHandler) {
         @yh_weakify(self)
-        self.configureImageViewWithDownloadProgressHandler(self.imageView, ^(NSInteger receivedSize, NSInteger expectedSize) {
+        self.configureImageViewWithDownloadProgressHandler(self.imageView, ^(NSInteger receivedSize, NSInteger expectedSize, NSURL *targetURL) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 @yh_strongify(self)
                 if (self.dismissing || !self.view.window) {

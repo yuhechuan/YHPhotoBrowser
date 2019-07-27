@@ -9,6 +9,7 @@
 #import "YHRemoteViewController.h"
 #import "YHPhotoBrowserController.h"
 #import "YHSquareView.h"
+#import "UIImageView+WebCache.h"
 
 @interface YHRemoteViewController ()<YHPhotoBrowserControllerDelegate, YHPhotoBrowserControllerDataSource>
 
@@ -35,7 +36,7 @@
         [self.imageURLs addObject:[NSString stringWithFormat:@"%@%d",preTitle,i]];
     }
     _squareView= [[YHSquareView alloc]initWithItems:[self.imageURLs copy]];
-    _squareView.frame = CGRectMake(0, 150, self.view.bounds.size.width, self.view.bounds.size.height);
+    _squareView.frame = CGRectMake(0, 100, self.view.bounds.size.width, self.view.bounds.size.height);
     
     __weak typeof(self) ws = self;
     _squareView.callBack = ^(NSInteger index) {
@@ -62,12 +63,16 @@
 - (void)viewController:(YHPhotoBrowserController *)viewController
       presentImageView:(UIImageView *)imageView
         forPageAtIndex:(NSInteger)index
-       progressHandler:(void (^)(NSInteger, NSInteger))progressHandler {
-    
+       progressHandler:(void (^)(NSInteger, NSInteger, NSURL * _Nullable))progressHandler {
     NSString *remoteUrl = [NSString stringWithFormat: @"https://raw.githubusercontent.com/yuhechuan/YHPhotoBrowser/master/images/Image-%ld.jpg",(long)index];
     NSString *url = self.imageURLs[index];
     UIImage *placeholder = [UIImage imageNamed:url];
-    imageView.image = placeholder;
+    [imageView sd_setImageWithURL:[NSURL URLWithString:remoteUrl]
+                 placeholderImage:placeholder
+                          options:0
+                         progress:progressHandler
+                        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                        }];
 }
 
 #pragma mark - YHPhotoBrowserControllerDelegate
@@ -81,7 +86,7 @@
 }
 
 - (nullable UIView *)thumbViewForPageAtIndex:(NSInteger)index {
-    return _imageView;
+    return _squareView.imageViews[index];
 }
 
 - (NSMutableArray *)imageURLs {

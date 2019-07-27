@@ -43,7 +43,7 @@
 /// Configure the imageView's image, implement one of this or upper method
 - (void)viewController:(nonnull YHPhotoBrowserController *)viewController presentImageView:(nonnull UIImageView *)imageView forPageAtIndex:(NSInteger)index __attribute__((deprecated("use `viewController:presentImageView:forPageAtIndex:progressHandler` instead.")));
 /// Configure the imageView's image, implement one of this or upper method
-- (void)viewController:(nonnull YHPhotoBrowserController *)viewController presentImageView:(nonnull UIImageView *)imageView forPageAtIndex:(NSInteger)index progressHandler:(nullable void (^)(NSInteger receivedSize, NSInteger expectedSize))progressHandler;
+- (void)viewController:(nonnull YHPhotoBrowserController *)viewController presentImageView:(nonnull UIImageView *)imageView forPageAtIndex:(NSInteger)index progressHandler:(nullable void (^)(NSInteger receivedSize, NSInteger expectedSize,NSURL * _Nullable targetURL))progressHandler;
 
 /// Use for dismiss animation, will be an UIImageView in general.
 - (nullable UIView *)thumbViewForPageAtIndex:(NSInteger)index;

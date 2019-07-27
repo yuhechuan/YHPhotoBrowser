@@ -1,0 +1,6 @@
+framework module Pods_YHPhotoBrowser {
+  umbrella header "Pods-YHPhotoBrowser-umbrella.h"
+
+  export *
+  module * { export * }
+}

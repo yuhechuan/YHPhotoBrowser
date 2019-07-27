@@ -27,7 +27,7 @@
 #import <UIKit/UIKit.h>
 
 @class YHPhotoDisplayView;
-typedef void(^YHImageDownloadProgressHandler)(NSInteger receivedSize, NSInteger expectedSize);
+typedef void(^YHImageDownloadProgressHandler)(NSInteger receivedSize, NSInteger expectedSize,NSURL * _Nullable targetURL);
 
 @interface YHPhotoDisplayViewController : UIViewController
 
