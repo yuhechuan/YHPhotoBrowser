@@ -35,7 +35,7 @@ typedef NS_ENUM(NSInteger, YHPanDirection) {
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesMoved:touches withEvent:event];
     
-    if (!_autoHorLock) {
+    if (!_autoHorLock || _direction != YHPanDirectionAny) {
         return;
     }
     
@@ -72,7 +72,7 @@ typedef NS_ENUM(NSInteger, YHPanDirection) {
     } else if (_direction == YHPanDirectionHor) {
         self.state = UIGestureRecognizerStateFailed;
     } else {
-        
+        _direction = YHPanDirectionVer;
     }
 }
 

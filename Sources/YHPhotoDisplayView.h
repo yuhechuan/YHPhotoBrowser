@@ -65,6 +65,7 @@
 
 - (void)_handleZoomForLocation:(CGPoint)location;
 - (void)_scrollToTopAnimated:(BOOL)animated;
+- (void)_recoverTransform;
 
 /// Scrolling content offset'y percent.
 @property (nonatomic, copy) void(^contentOffSetVerticalPercentHandler)(CGFloat);

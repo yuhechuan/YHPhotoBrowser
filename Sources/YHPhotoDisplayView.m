@@ -152,7 +152,7 @@
 }
 
 - (void)_addPanGestureRecognizer {
-    self.dragGestureHandler = [[YHDragGestureHandler alloc]initWithGestureView:self.imageView];
+    self.dragGestureHandler = [[YHDragGestureHandler alloc]initWithGestureView:self];
     __weak typeof(self) weakSelf = self;
     self.dragGestureHandler.completeBlock = ^(BOOL finish, CGFloat velocity) {
         if (finish && weakSelf.didEndDraggingInProperpositionHandler) {
@@ -235,6 +235,10 @@
     return d;
 }
 
+/// 恢复原样
+- (void)_recoverTransform {
+    self.transform = CGAffineTransformIdentity;
+}
 
 #pragma mark - UIScrollViewDelegate
 

@@ -34,14 +34,14 @@ typedef void(^YHImageDownloadProgressHandler)(NSInteger receivedSize, NSInteger 
 @property (nonatomic, assign) NSInteger page;
 
 /// Return the image for current imageView
-@property (nonatomic, copy) UIImage *(^fetchImageHandler)(void);
+@property (nonatomic, copy) UIImage *_Nullable(^ _Nullable fetchImageHandler)(void);
 /// Configure image for current imageView
-@property (nonatomic, copy) void (^configureImageViewHandler)(UIImageView *imageView);
+@property (nonatomic, copy) void (^ _Nullable configureImageViewHandler)(UIImageView * _Nullable imageView);
 
 /// Configure image for current imageView with progress
-@property (nonatomic, copy) void (^configureImageViewWithDownloadProgressHandler)(UIImageView *imageView, YHImageDownloadProgressHandler handler);
+@property (nonatomic, copy) void (^ _Nullable configureImageViewWithDownloadProgressHandler)(UIImageView * _Nullable imageView, YHImageDownloadProgressHandler _Nullable handler);
 
-@property (nonatomic, strong, readonly) YHPhotoDisplayView *imageScrollView;
+@property (nonatomic, strong, readonly) YHPhotoDisplayView * _Nullable imageScrollView;
 
 - (void)reloadData;
 

@@ -315,7 +315,6 @@ static const NSUInteger reusable_page_count = 3;
 }
 
 - (void)_onPresent {
-    NSLog(@"_onDismiss currentThread ===== %@",[NSThread currentThread]);
     YHPhotoDisplayViewController *currentScrollViewController = self.currentScrollViewController;
     self.blurBackgroundView.alpha = 1;
     [self _hideStatusBarIfNeeded];
@@ -377,22 +376,18 @@ static const NSUInteger reusable_page_count = 3;
     YHPhotoDisplayView *imageScrollView = currentScrollViewController.imageScrollView;
     UIImageView *imageView = imageScrollView.imageView;
     UIImage *currentImage = imageView.image;
-    // 图片未加载，默认 CrossDissolve 动画。
+    // 没有图片不处理
     if (!currentImage) {
         return;
     }
-    // present 之前显示的图片视图。
+    // 动画展示
     UIView *thumbView = self.currentThumbView;
     CGRect destFrame = CGRectZero;
     if (thumbView) {
-        // 还原到起始位置然后 dismiss.
-        destFrame = [thumbView.superview convertRect:thumbView.frame toView:currentScrollViewController.view];
-        // 同步裁剪图片位置
+        destFrame = [thumbView.superview convertRect:thumbView.frame toView:self.view];
         imageView.frame = destFrame;
     } else {
-        // 移动到屏幕外然后 dismiss.
         imageScrollView.alpha = 0;
-
         CGPoint center = self.view.window.center;
         destFrame = CGRectMake(center.x, center.y, 0, 0);
         imageView.frame = destFrame;
@@ -521,13 +516,14 @@ static const NSUInteger reusable_page_count = 3;
                 if (self.blurBackground && percent < 0.5) {
                     percent = 0.5;
                 }
-                NSLog(@"blurBackgroundView == %f",percent);
                 self.blurBackgroundView.alpha = percent;
             };
+            __weak typeof(imageScrollerViewController) weakScrollerView = imageScrollerViewController;
             imageScrollerViewController.imageScrollView.didEndDraggingInProperpositionHandler = ^(CGFloat velocity){
                 @yh_strongify(self)
                 self.velocity = velocity;
                 self.didEndDragging = YES;
+                [weakScrollerView.imageScrollView _recoverTransform]; // 恢复原来位置
                 if (self.exit) {
                     self.exit(self);
                 } else {

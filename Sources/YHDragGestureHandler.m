@@ -13,6 +13,7 @@
 
 @property (nonatomic, assign) CGRect gestureViewOriginFrame;     // 原始位置
 @property (nonatomic,   weak) UIView *gestureView;               // 手势的对象视图
+@property (nonatomic,   weak) UIView *originGestureView;               // 手势的对象视图
 @property (nonatomic,   weak) UIView *blurView;                  // 背景视图
 @property (nonatomic, assign) CGFloat referenceHeight;           // 参考高度
 
@@ -55,9 +56,7 @@
     CGPoint pointVelocity = [gesture velocityInView:self.gestureView];
     CGPoint changePoint = [gesture translationInView:self.gestureView];
     if (gesture.state == UIGestureRecognizerStateBegan) {
-        
         self.gestureViewOriginFrame = self.gestureView.frame;
-        
     } else if (gesture.state == UIGestureRecognizerStateChanged) {
      
         //背景的一半高度作为参照
@@ -76,12 +75,14 @@
             } else {
                 moveType = @"add";
             }
-        } else {// 在中心线下边
+        } else if(offsety > 0) {// 在中心线下边
             if (changePoint.y < 0) {
                 moveType = @"add";
             } else {
                 moveType = @"del";
             }
+        } else {
+            moveType = @"del";
         }
         
         //transform的scale
@@ -113,9 +114,8 @@
     } else if (gesture.state == UIGestureRecognizerStateEnded) {
      
         float offsety = fabs(self.gestureView.frame.origin.y - self.gestureViewOriginFrame.origin.y);
-        float longoffsety = self.gestureView.frame.origin.y;
         //如果放手的瞬时速度大于100或者偏移距离大于100，则走回调
-        if (fabs(pointVelocity.y) > 100 || offsety > 100 || longoffsety < -10) {
+        if (fabs(pointVelocity.y) > 100 || offsety > 100) {
             if (self.completeBlock != nil) {
                 self.completeBlock(true, pointVelocity.y);
             }
@@ -158,9 +158,27 @@
     CGFloat contentOffsety = scrollView.contentOffset.y;
     //NSLog(@"scrollView.contentOffset.y == %f",contentOffsety);
     if (contentOffsety == 0 || contentOffsety == scrollView.contentSize.height - scrollView.frame.size.height) {
-        return contentOffsety; // 支持长图的滑动
+        return contentOffsety; // 支持长图的滑动 且scrollView frame未变化之前
     }
     return -1;
+}
+
+- (void)confirmGestureView {
+    
+    UIScrollView *scrollView = nil;
+    if ([self.originGestureView isKindOfClass:[UIScrollView class]]) {
+        scrollView = (UIScrollView *)self.originGestureView;
+    } else if ([self.originGestureView.superview isKindOfClass:[UIScrollView class]]) {
+        scrollView = (UIScrollView *)self.originGestureView.superview;
+    } else {
+        
+    }
+    
+    if (scrollView.contentSize.height <= scrollView.frame.size.height) {
+        self.gestureView = self.originGestureView;
+    } else {
+        self.gestureView = scrollView;
+    }
 }
 
 
